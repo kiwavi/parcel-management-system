@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}{% endblock title %}</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">    
+    {% block style %}
+    {% endblock style %}
+  </head>
+  <div class="header">
+    <a href="#default" class="logo">NorthRift Parcels</a>
+    <div class="header-right">
+      <a class="active" href="{% url 'logout' %}">Logout</a>
+      <a href="{% url 'search' %}"> Go to search </a>
+      <a href="{% url 'home' %}"> Home </a>
+    </div>
+  </div>
+  <div class='title'>
+    Admin Dashboard
+  </div>
+  
+  {% block content %}
+  {% endblock content %}
+
+  <div class='fixed-footer'>
+    <a href="#"> Contact us </a> <br> <br>
+    &#169; NorthRift 2021
+  </div>
+
+</html>
+
+

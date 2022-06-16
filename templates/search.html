@@ -1,0 +1,15 @@
+<html>
+  {% extends 'base.html' %}
+  <head>
+    <title> Search for a parcel </title>
+  </head>
+  {% block content %}
+  <div class='search'>
+    <form action="{% url 'results' %}" method="get">
+      {{ form.as_table }}
+      <input type="submit" value="search">
+    </form>
+  </div>
+  {% endblock content %}
+</html>
+

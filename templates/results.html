@@ -1,0 +1,18 @@
+<html>
+  {% extends 'base.html' %}
+  <head>
+    <title>Results </title>
+  </head>
+  {% block content %}
+  {% if object_list %}
+  <h5> Results </h5>
+  <div class='results'>
+    {% for object in object_list %}
+    <a href="{% url 'detailedresult' object.pk %}"> {{ object.parcel_number }} </a> <br> <br>  
+    {% endfor %}
+  </div>
+  {% else %}
+  <h1> Sorry, no such parcel found </h1>
+  {% endif %}
+  {% endblock content %}
+</html>

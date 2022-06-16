@@ -1,0 +1,10 @@
+<html>
+  <head>
+    <title> Northrift parcels </title>
+  </head>
+  {% extends 'base.html' %}
+  {% block content %}
+  Successfully submitted the parcel, the parcel number is {{ parcel }}. An email with the details has been sent to the receiver and the sender.
+  <a href="{% url 'home' %}"> Back </a>
+  {% endblock content %}
+</html>

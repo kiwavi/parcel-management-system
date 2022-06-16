@@ -1,0 +1,26 @@
+<html>
+  {% extends 'base.html' %}
+  {% block content %}
+  <header> <title> Detailed result </title> </header>
+  <div class='parcelinfo'>
+    <div class='inside-text'> Category: </div> {{ object.category }}  <br>
+    <div class='inside-text'> From: </div> {{ object.from_location }} <br>
+    <div class='inside-text'> To:  </div> {{ object.destination }} <br>
+    <div class='inside-text'> ID Number of sender:  </div> {{ object.id_number_sender }} <br>
+    <div class='inside-text'> ID Number of recipient:  </div> {{ object.id_number_receiver }}  <br>
+    <div class='inside-text'> Email of Sender:  </div> {{ object.email_of_sender }} <br>
+    <div class='inside-text'> Email of recipient:  </div> {{ object.email_of_receiver }} <br>
+    <div class='inside-text'> Sent on:  </div> {{ object.date }} <br>
+    <div class='inside-text'> Parcel Number:  </div> {{ object.parcel_number }} <br>
+    <div class='inside-text'> Status of the Parcel:  </div> {{ object.status  }} <br>
+    <div class='inside-text'> Status of Recipient Information:  </div> {{ object.status_alert }} <br>
+
+    {% if parcel_status == 'In transit' %} 
+    <a href="{% url 'discharge' object.pk %}"> Discharge </a> <br>
+    {% endif %}
+    {% if alert_status == 'Not alerted' %}
+    <a href="{% url 'alert' object.pk %}"> Alert receiver </a>
+    {% endif %}
+  </div>
+  {% endblock content %}
+</html>
