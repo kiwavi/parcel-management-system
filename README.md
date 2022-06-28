@@ -32,8 +32,13 @@ python manage.py migrate
 
 Create superuser    
 python manage.py createsuperuser    
-Once you're done, run the server.     
+Once you're done, run the server.  
 `python manage.py runserver`     
 Navigate to 127:0.0.0.1/8000 on your browser    
 Login using the superuser credentials you made    
 Start testing    
+
+
+Anticipated improvements    
+- Changing from emails to SMS using AfricasTalking API    
+- Creating user permission levels    
