@@ -1,5 +1,5 @@
 # parcel-management-system
-This project automates the process of registering, reporting, and discharging parcels in a way that makes analogue record keeping obsolete.     
+## This project automates the process of registering, reporting, and discharging parcels in a way that makes analogue record keeping obsolete.     
 Many Matatu Saccos usually use analogue methods to manage parcels    
 This project currently uses email to inform customers about their parcels.    
 Get Started    
@@ -29,6 +29,11 @@ You can generate a secret key using the following url: https://djecrety.ir/
 
 Run migrations    
 python manage.py migrate    
+
+Create superuser    
+python manage.py createsuperuser    
 Once you're done, run the server.     
 `python manage.py runserver`     
-Navigate to 127:0.0.0.1/8000 on your browser and start testing    
+Navigate to 127:0.0.0.1/8000 on your browser    
+Login using the superuser credentials you made    
+Start testing    
