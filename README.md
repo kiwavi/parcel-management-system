@@ -9,8 +9,6 @@ Create a virtual environment
 `python -m venv venv`    
 Activate the virtual environment    
 `source venv/bin/activate`    
-Perform Migrations    
-`python manage.py migrate`     
 
 
 This project uses email to communicate to customers by informing them about parcel arrival, departure, and status. Therefore, it uses gmail credentials to send out emails    
@@ -28,6 +26,9 @@ EMAIL_HOST_PASSWORD = 'app_access_password'
 
 Enter your own secret_key, email-host-user and email-host-password. The password should be an app password provided for such apps.     
 You can generate a secret key using the following url: https://djecrety.ir/    
+
+Run migrations    
+python manage.py migrate    
 Once you're done, run the server.     
 `python manage.py runserver`     
 Navigate to 127:0.0.0.1/8000 on your browser and start testing    
