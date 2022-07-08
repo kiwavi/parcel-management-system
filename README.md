@@ -1,5 +1,5 @@
 # parcel-management-system
-## This project automates the process of registering, reporting, and discharging parcels in a way that makes analogue record keeping obsolete.     
+## This project automates the process of registering, reporting, and discharging parcels.       
 Many Matatu Saccos usually use analogue methods to manage parcels    
 This project currently uses email to inform customers about their parcels.    
 Get Started    
