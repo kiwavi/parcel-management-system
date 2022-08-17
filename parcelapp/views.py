@@ -13,6 +13,7 @@ from .forms import SearchParcelForm, DischargeForm, AcceptForm
 from django.core.mail import send_mail
 from django.views.generic.detail import SingleObjectMixin
 from decouple import config 
+import uuid
 
 date_today = date.today()
 
@@ -27,33 +28,26 @@ class HomePage(LoginRequiredMixin, FormView):
     def form_valid(self,form):
         if form.is_valid:
             self.entry = form.save(commit=False)
-            count = 0
-            numbers = []
-            while count < 4:
-                number = random.randint(1,9)
-                numbers.append(number)
-                count = count + 1
-            siku = str(date_today.year) + str(date_today.month) + str(date_today.day) + str(numbers[0]) + str(numbers[1]) + str(numbers[2]) + str(numbers[3])
-            self.entry.parcel_number = siku
+            self.entry.parcel_number = str(uuid.uuid4())
             self.entry.status = 'In transit'
             self.entry.status_alert = 'Not alerted'
             self.entry.save()
             self.form = form
-            send_mail(
-                'You Have Registered A Parcel',
-                'This is to confirm that you have successfully registered parcel number ' + str(self.entry.parcel_number) + 'on ' + str(date_today),
-                config('EMAIL_HOST_USER'),
-                [self.entry.email_of_sender],
-                fail_silently = False
-            )
+            # send_mail(
+            #     'You Have Registered A Parcel',
+            #     'This is to confirm that you have successfully registered parcel number ' + str(self.entry.parcel_number) + 'on ' + str(date_today),
+            #     config('EMAIL_HOST_USER'),
+            #     [self.entry.email_of_sender],
+            #     fail_silently = False
+            # )
 
-            send_mail(
-                'You Will Receive A Parcel',
-                'You will receive parcel number ' + str(self.entry.parcel_number) + ' .We will inform you once it reaches ' + self.entry.destination,
-                config('EMAIL_HOST_USER'),
-                [self.entry.email_of_receiver],
-                fail_silently = False
-            )
+            # send_mail(
+            #     'You Will Receive A Parcel',
+            #     'You will receive parcel number ' + str(self.entry.parcel_number) + ' .We will inform you once it reaches ' + self.entry.destination,
+            #     config('EMAIL_HOST_USER'),
+            #     [self.entry.email_of_receiver],
+            #     fail_silently = False
+            # )
             return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self): # here, i'm passing the parcel number to the url success. the kwargs must also be included in urls.py
@@ -157,3 +151,8 @@ class AlertView(LoginRequiredMixin, FormMixin, DetailView):
         
         def form_valid(self,form):
             return super().form_valid(form)
+
+
+# change the emailing system to use signals after a record has been added.
+# use htmx to do most stuff
+# add tailwind css
