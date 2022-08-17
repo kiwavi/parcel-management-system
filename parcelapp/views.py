@@ -33,21 +33,6 @@ class HomePage(LoginRequiredMixin, FormView):
             self.entry.status_alert = 'Not alerted'
             self.entry.save()
             self.form = form
-            # send_mail(
-            #     'You Have Registered A Parcel',
-            #     'This is to confirm that you have successfully registered parcel number ' + str(self.entry.parcel_number) + 'on ' + str(date_today),
-            #     config('EMAIL_HOST_USER'),
-            #     [self.entry.email_of_sender],
-            #     fail_silently = False
-            # )
-
-            # send_mail(
-            #     'You Will Receive A Parcel',
-            #     'You will receive parcel number ' + str(self.entry.parcel_number) + ' .We will inform you once it reaches ' + self.entry.destination,
-            #     config('EMAIL_HOST_USER'),
-            #     [self.entry.email_of_receiver],
-            #     fail_silently = False
-            # )
             return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self): # here, i'm passing the parcel number to the url success. the kwargs must also be included in urls.py
