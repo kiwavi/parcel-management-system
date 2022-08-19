@@ -91,18 +91,11 @@ class DischargeView(LoginRequiredMixin, FormMixin, DetailView):
         form = self.get_form()
         self.object = self.get_object()
         pk = self.object.pk
+        status_object = Parcel.objects.get(id=pk)
         if form.is_valid:
-            status_object = Parcel.objects.get(id=pk)
             status_object.status = 'Discharged'
             status_object.save()
-            send_mail(
-                'Confirmation that you picked',
-                'This is to confirm that you have successfully received the parcel number ' + str(status_object.parcel_number) + 'on ' + str(date_today),
-                config('EMAIL_HOST_USER'),
-                [status_object.email_of_receiver],
-                fail_silently = False
-            )
-            return self.form_valid(form)
+        return self.form_valid(form)
             
     def form_valid(self,form):
         return super().form_valid(form)
@@ -123,21 +116,10 @@ class AlertView(LoginRequiredMixin, FormMixin, DetailView):
         pk = self.object.pk
         order = Parcel.objects.get(id=pk)
         if form.is_valid:
-            send_mail(
-                'Parcel has arrived',
-                'Hello, this is to confirm that the parcel number ' + str(order.parcel_number) + ' sent to you from ' + order.from_location + ' on ' + str(order.date) + ' has arrived at ' + order.destination + '. Come pick the parcel at our ' + order.destination + ' offices.',
-                config('EMAIL_HOST_USER'),
-                [order.email_of_receiver],
-                fail_silently = False
-            )
             order.status_alert = 'Alerted'
             order.save() #you must save once you have altered a record from the view
         return self.form_valid(form)
         
-        def form_valid(self,form):
-            return super().form_valid(form)
+    def form_valid(self,form):
+        return super().form_valid(form)
 
-
-# change the emailing system to use signals after a record has been added.
-# use htmx to do most stuff
-# add tailwind css

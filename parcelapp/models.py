@@ -30,21 +30,50 @@ class Parcel(models.Model):
     status_alert = models.CharField(max_length=20)
 
 
+# Send notifications to both sender and receiver after new order is saved
 def notify_sender_and_receiver(sender,instance,**kwargs):
-    send_mail(
-        'You Have Registered A Parcel',
-        'This is to confirm that you have successfully registered parcel number ' + str(instance.parcel_number) + ' on ' + str(date_today),
-        config('EMAIL_HOST_USER'),
-        [instance.email_of_sender],
-        fail_silently = False
-    )
+    if instance.status_alert == 'Not alerted':
+        if instance.status == 'In transit':
+            send_mail(
+                'You Have Registered A Parcel',
+                'This is to confirm that you have successfully registered parcel number ' + str(instance.parcel_number) + ' on ' + str(date_today),
+                config('EMAIL_HOST_USER'),
+                [instance.email_of_sender],
+                fail_silently = False
+            )
 
-    send_mail(
-        'You Will Receive A Parcel',
-        'You will receive parcel number ' + str(instance.parcel_number) + ' .We will inform you once it reaches ' + instance.destination,
-        config('EMAIL_HOST_USER'),
-        [instance.email_of_receiver],
-        fail_silently = False
-    )
+            send_mail(
+                'You Will Receive A Parcel',
+                'You will receive parcel number ' + str(instance.parcel_number) + ' .We will inform you once it reaches ' + instance.destination,
+                config('EMAIL_HOST_USER'),
+                [instance.email_of_receiver],
+                fail_silently = False
+            )
+
+    elif instance.status_alert == 'Alerted':
+        if instance.status == 'In transit':
+            send_mail(
+                'Parcel has arrived',
+                'Hello, this is to confirm that the parcel number ' + str(instance.parcel_number) + ' sent to you from ' + instance.from_location + ' on ' + str(instance.date) + ' has arrived at ' + instance.destination + '. Come pick the parcel at our ' + instance.destination + ' offices.',
+                config('EMAIL_HOST_USER'),
+                [instance.email_of_receiver],
+                fail_silently = False
+            )
+
+        elif instance.status == 'Discharged':
+            send_mail(
+                'Confirmation that you picked',
+                'This is to confirm that you have successfully received the parcel number ' + str(instance.parcel_number) + ' on ' + str(date_today),
+                config('EMAIL_HOST_USER'),
+                [instance.email_of_receiver],
+                fail_silently = False
+            )
+
+        else:
+            pass
+
+    else:
+        pass
+
 
 post_save.connect(notify_sender_and_receiver,sender=Parcel)
